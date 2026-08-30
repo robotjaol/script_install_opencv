@@ -1,62 +1,49 @@
-# script_install_opencv
-Only one command to installed opencv cpp / py
+# OpenCV Source Installer for Ubuntu
 
-## Prerequisites
+A shell script that installs build dependencies, downloads OpenCV and opencv_contrib, compiles them, and performs a system-wide installation for C++ and Python development.
 
-- Ubuntu 20.04, 22.04, or 24.04
-- `git` installed on your system
-- cpp & python3
+> **Project status:** privileged build automation; review and pin versions before running on a disposable or well-backed-up Ubuntu environment.
 
-## Installation Steps
+## What this repository contains
 
-1. **Clone this repository:**
-   
-   Open a terminal and run the following command to clone the repository :
+- APT dependency installation for an OpenCV source build.
+- OpenCV and contrib module download/build workflow.
+- CMake configuration for C++ and Python bindings.
+- System-wide installation and basic verification guidance.
 
-   ```bash
-   git clone <git@github.com:robotjaol/script_install_opencv.git>
-   cd <script_install_opencv>  
-## Run the installation script:
-This repository includes a pre-configured script for installing OpenCV. To execute it with root privileges (as necessary for installing dependencies), use the following command
-
-    sudo chmod+x install_opencv.sh && sudo ./install_opencv.sh
-
-## The script will:
-- Update the package list and upgrade the system.
-- Install all required dependencies for building OpenCV from source, including compilers, libraries, and - Python support.
-- Clone OpenCV and OpenCV contrib repositories.
-- Build OpenCV with support for both C++ and Python.
-- Install OpenCV and link the necessary files for system-wide access.
-
-## Verify The Instalation
-After the script finishes, you can verify the OpenCV installation:
-
-1. **Python** 
-
-        python3 -c "import cv2; print(cv2.__version__)"
-
-For C++: You can create test.cpp and compile a simple OpenCV C++ program to verify the installation:
-
-2. **CPP**
-    
-        #include <opencv2/opencv.hpp>
-        int main() {
-        cv::Mat img = cv::imread("test.jpg");
-        cv::imshow("Image", img);
-        cv::waitKey(0);
-        return 0;
-        }
-
-    Compile and Run it 
-
-        g++ test.cpp -o test `pkg-config --cflags --libs opencv4`
-        ./test
+## Quick start
 
 
-## Final Notes
-This script installs OpenCV for both C++ and Python.
-If you only need OpenCV for Python or C++, you can edit the script to skip the unnecessary sections.
+~~~bash
+git clone https://github.com/robotjaol/script_install_opencv.git
+cd script_install_opencv
+less install_opencv.sh
+chmod +x install_opencv.sh
+sudo ./install_opencv.sh
+~~~
 
+## Engineering notes
 
+- The script changes system packages and /usr/local; it is not equivalent to a virtual-environment install.
+- Pin OpenCV and opencv_contrib to the same release or commit for reproducibility.
+- Record CMake output, compiler version, CPU architecture, and enabled modules.
+- For Python-only use, prefer a virtual environment and a maintained wheel when it meets requirements.
 
+## Repository map
 
+| Path | Purpose |
+| --- | --- |
+| install_opencv.sh | Privileged dependency, build, and installation workflow. |
+| LICENSE | License terms. |
+
+## Safety and limitations
+
+Do not run a privileged installer without reading it. Use backups or a disposable environment, check downloaded sources, and expect the build to consume significant time, disk space, memory, and CPU.
+
+## Contributing
+
+Open an issue before a large change. Keep changes focused, document assumptions, and include a reproducible verification step.
+
+## License
+
+A repository-wide open-source license has not been declared. Obtain permission before redistributing material.
